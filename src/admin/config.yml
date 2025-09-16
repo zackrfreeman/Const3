@@ -1,0 +1,82 @@
+backend:
+    name: git-gateway
+    branch: main
+
+local_backend: true
+# change url to a link to the image you want to use, no file paths, must be a URL
+logo_url: https://codestitch.app/frontend/images/logo.png
+
+media_folder: "src/assets/images/blog"
+public_folder: "/assets/images/blog"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        hint: "The main title of the blog post (appears as H1)."
+
+      - label: "URL Slug"
+        name: "url"
+        widget: "string"
+        hint: 'Sets the final URL path (e.g., "my-first-post" becomes /blog/my-first-post/). Use lowercase letters, numbers, and hyphens.'
+
+      - label: "Description"
+        name: "description"
+        widget: "string"
+        hint: "A short summary for SEO meta descriptions and post previews (approx. 160 characters)."
+
+      - label: "Author"
+        name: "author"
+        widget: "string"
+        hint: "Name of the person who wrote the post."
+
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        hint: "Publication date and time for the post. Used for sorting."
+
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        default: ["post"]
+        hint: "Keywords or categories (e.g., 'post', 'news'). Press Enter after each tag. 'post' tag is required."
+
+      - label: "Featured Image"
+        name: "image"
+        widget: "image"
+        hint: "The main image displayed for the post (e.g., at the top or in listings)."
+
+      - label: "Image Caption"
+        name: "imageAlt"
+        widget: "string"
+        hint: "Descriptive text for the featured image (important for SEO and screen readers)."
+
+      # --- Gallery field ---
+      - label: "Image Gallery"
+        name: "gallery"
+        widget: "list"
+        summary: "{{fields.image}}"
+        hint: "Add multiple images to display in a gallery within the post." # Hint for the gallery list itself
+        field:                          # Defines the fields for *each* item in the list
+          label: "Image"
+          name: "image"                 # The value stored for each item will be the image path
+          widget: "image"
+          hint: "Upload one image for this gallery item." # Hint for the field *within* the list item
+          media_library:
+            allow_multiple: false
+        # --- Optional List Widget Settings ---
+        # allow_add: true
+        # collapsed: true
+        # label_singular: "Image"
+
+      # --- Body field ---
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        hint: "The main content of the blog post. Use Markdown for formatting (headings, bold, links, etc.)."
